@@ -32,8 +32,8 @@ parser = argparse.ArgumentParser(
     formatter_class=argparse.RawDescriptionHelpFormatter,
     )
 parser.set_defaults(**defaults)
-parser.add_argument("-package","--package", help="package name foo/foo")
-parser.add_argument("-portdir","--portdir", help="portage directory")
+parser.add_argument("-package", "--package", help="package name foo/foo")
+parser.add_argument("-portdir", "--portdir", help="portage directory")
 args = parser.parse_args(remaining_argv)
 logging.info(args)
 
@@ -182,7 +182,7 @@ class herd:
         "xen":"xen@gentoo.org",
         "xfce":"xfce@gentoo.org"}
 
-    def run(self,file):
+    def run(self, file):
         soup = self.soup(file)
         try:
             maint = self.maint(soup[1])
@@ -193,15 +193,15 @@ class herd:
         except:
             herd = None
 
-        email = self.mail(maint,herd)
+        email = self.mail(maint, herd)
         return email
 
     def list(self):
         return self.pherd
 
-    def soup(self,file):
+    def soup(self, file):
         try:
-            xml = open(file,'r')
+            xml = open(file, 'r')
         except:
             sys.exit('we cannot find the package: ' + args.package )
         soup = BeautifulStoneSoup(xml)
@@ -232,7 +232,7 @@ class herd:
                     logging.debug("maint1: "+ str(maint))
                     q += 1
                 elif q == 1 or q == len(msoup):
-                    maint = '%s%s' % (maint,i.string)
+                    maint = '%s%s' % (maint, i.string)
                     logging.debug("maint2: "+ str(maint))
                     q += 1
                 else:
@@ -241,7 +241,7 @@ class herd:
         logging.debug("maint: "+ str(maint))
         return maint
 
-    def herd(self,hsoup):
+    def herd(self, hsoup):
         q = 0
         for i in hsoup:
             if i.string in self.pherd.keys():

@@ -1,3 +1,14 @@
+#! /usr/bin/python
+#
+# Copyright(c) 2009 Gentoo Foundation
+# Licensed under the GNU General Public License, v2
+#
+# Copyright: 2013 Alice Ferrazzi <alice.ferrazzi@gmail.com>
+# License: GPL2/BSD
+#
+
+__version__ = '0.1'
+
 from BeautifulSoup import BeautifulStoneSoup
 import argparse
 import ConfigParser
@@ -228,7 +239,7 @@ class herd:
                     logging.debug("maint1: "+ str(maint))
                     q += 1
                 elif q == 0 and len(msoup) == 1:
-                    maint = '%s' % (i.string)
+                    maint = '%s:' % (i.string)
                     logging.debug("maint1: "+ str(maint))
                     q += 1
                 elif q == 1 or q == len(msoup):
@@ -264,5 +275,9 @@ class herd:
             print("this dont have to happen")
         return email
 
-herd = herd()
-print herd.run(args.portdir + args.package +'/metadata.xml')
+def main():
+    herd = herd()
+    print herd.run(args.portdir + args.package +'/metadata.xml')
+
+if __name__ == '__main__':
+        sys.exit(main())

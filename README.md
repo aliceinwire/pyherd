@@ -1,4 +1,4 @@
 pyherd
 ======
 
-gentoo herd metadata reader for bug-wranglers purpose
+gentoo herd metadata reader for bug-wranglers purpose.

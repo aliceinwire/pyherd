@@ -2,5 +2,5 @@ language: python
 python:
   - "2.7"
 
-script: nosetests -I '^integration.*'
+script: "$PYTHON pyherd/pyherd.py"
 

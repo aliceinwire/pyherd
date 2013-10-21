@@ -14,6 +14,8 @@ import argparse
 import ConfigParser
 import logging
 import sys
+import os
+import subprocess
 
 logging.basicConfig(level=logging.DEBUG)
 
@@ -45,11 +47,17 @@ parser = argparse.ArgumentParser(
 parser.set_defaults(**defaults)
 parser.add_argument("-package", "--package", help="package name foo/foo")
 parser.add_argument("-portdir", "--portdir", help="portage directory")
+parser.add_argument("-newtree", "--newtree", action='store_true', help="portage directory")
 args = parser.parse_args(remaining_argv)
 logging.info(args)
 
 class herd(object):
     def __init__(self):
+        if self.args.newtree:
+            rsync = "rsync -a -v --progress rsync://rsync.jp.gentoo.org/gentoo-portage /root/pyherd/rsync/ --include '*/' --include '**metadata.xml' --include '**herds.xml' --exclude '*' \n"
+            UND1 = subprocess.Popen(bashCommand, stdout=subprocess.PIPE, shell=True, cwd="" + SVNFOLDER + "")
+            for line in stdout:
+                print line.strip('\n')
         self.pherd = {"accessibility":"accessibility@gentoo.org",
         "ada":"ada@gentoo.org",
         "afterstep":"afterstep@gentoo.org",

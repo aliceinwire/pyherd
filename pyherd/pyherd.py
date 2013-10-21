@@ -48,7 +48,7 @@ parser.add_argument("-portdir", "--portdir", help="portage directory")
 args = parser.parse_args(remaining_argv)
 logging.info(args)
 
-class herd:
+class herd(object):
     def __init__(self):
         self.pherd = {"accessibility":"accessibility@gentoo.org",
         "ada":"ada@gentoo.org",
@@ -276,7 +276,8 @@ class herd:
         return email
 
 def main():
-    herd = herd()
+    import pyherd
+    herd = pyherd.herd()
     print herd.run(args.portdir + args.package +'/metadata.xml')
 
 if __name__ == '__main__':

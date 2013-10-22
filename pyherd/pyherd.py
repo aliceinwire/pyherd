@@ -18,6 +18,8 @@ import os
 import subprocess
 
 logging.basicConfig(level=logging.DEBUG)
+cwd = os.path.abspath(os.path.dirname(__file__))
+rcwd = cwd + "/rsync/"
 
 conf_parser = argparse.ArgumentParser(
     # Turn off help, so we print all options in response to -h
@@ -28,7 +30,8 @@ conf_parser.add_argument("-c", "--conf_file",
 args, remaining_argv = conf_parser.parse_known_args()
 defaults = {
     "package" : "mail-client/mutt",
-    "portdir" : "/usr/portage/"
+    "portdir" : rcwd,
+    "newtree" : False
     }
 if args.conf_file:
     config = ConfigParser.SafeConfigParser()
@@ -53,11 +56,17 @@ logging.info(args)
 
 class herd(object):
     def __init__(self):
-        if self.args.newtree:
+        if args.newtree:
+            cwd = os.path.abspath(os.path.dirname(__file__))
+            print cwd
+            rcwd = (cwd + "/rsync/")
+            if not os.path.isdir(rcwd):
+                os.makedirs(rcwd)
             rsync = "rsync -a -v --progress rsync://rsync.jp.gentoo.org/gentoo-portage /root/pyherd/rsync/ --include '*/' --include '**metadata.xml' --include '**herds.xml' --exclude '*' \n"
-            UND1 = subprocess.Popen(bashCommand, stdout=subprocess.PIPE, shell=True, cwd="" + SVNFOLDER + "")
-            for line in stdout:
+            conn = subprocess.Popen(rsync, stdout=subprocess.PIPE, shell=True, cwd="" + rcwd + "")
+            for line in conn.stdout:
                 print line.strip('\n')
+
         self.pherd = {"accessibility":"accessibility@gentoo.org",
         "ada":"ada@gentoo.org",
         "afterstep":"afterstep@gentoo.org",

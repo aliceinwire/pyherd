@@ -62,7 +62,7 @@ class herd(object):
             rcwd = (cwd + "/rsync/")
             if not os.path.isdir(rcwd):
                 os.makedirs(rcwd)
-            rsync = "rsync -a -v --progress rsync://rsync.jp.gentoo.org/gentoo-portage /root/pyherd/rsync/ --include '*/' --include '**metadata.xml' --include '**herds.xml' --exclude '*' \n"
+            rsync = "rsync -a -v --progress rsync://rsync.jp.gentoo.org/gentoo-portage . --include '*/' --include '**metadata.xml' --include '**herds.xml' --exclude '*' \n"
             conn = subprocess.Popen(rsync, stdout=subprocess.PIPE, shell=True, cwd="" + rcwd + "")
             for line in conn.stdout:
                 print line.strip('\n')
@@ -248,7 +248,7 @@ class herd(object):
 
     def maint(self, msoup):
         q = 0
-        print len(msoup)
+        mail_number = len(msoup)
         if msoup:
             for i in msoup:
                 if q == 0 and len(msoup) > 1:
@@ -264,9 +264,10 @@ class herd(object):
                     logging.debug("maint2: "+ str(maint))
                     q += 1
                 else:
-                    logging.debug("mainti3: "+ str(maint))
+                    logging.debug("maint3: "+ str(maint))
                     maint = '%s,%s' % (maint, i.string)
         logging.debug("maint: "+ str(maint))
+        print "found " + str(mail_number) + " mail."
         return maint
 
     def herd(self, hsoup):
